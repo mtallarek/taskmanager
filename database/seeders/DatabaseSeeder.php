@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Status;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\PersonalAccessToken;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,11 +15,39 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+
+        $rootUser = User::factory()->create([
+            'name' => 'root',
+            'email' => 'root@example.com',
+        ]);
+
+        PersonalAccessToken::create([
+            'tokenable_type' => User::class,
+            'tokenable_id'   => $rootUser->id,
+            'name'           => 'Root token',
+            'token'          => hash('sha256', 'meIsDev42'),
+            'abilities'      => ['*'],
+        ]);
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'user 1',
+            'email' => 'user1@example.com',
         ]);
+        User::factory()->create([
+            'name' => 'user 2',
+            'email' => 'user2@example.com',
+        ]);
+
+        Status::factory()->create([
+            'label' => 'TO DO',
+        ]);
+        Status::factory()->create([
+            'label' => 'In progress',
+        ]);
+        Status::factory()->create([
+            'label' => 'Done',
+        ]);
+
+
     }
 }
