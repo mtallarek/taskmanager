@@ -24,6 +24,7 @@ class StoreTaskRequest extends FormRequest
         return [
             'title'  => ['required', 'string', 'max:128'],
             'description' => ['string', 'max:1024'],
+            'deadline' => ['date', 'after_or_equal:today'],
             'status_id'  => ['required', 'integer', 'exists:statuses,id'],
         ];
     }
