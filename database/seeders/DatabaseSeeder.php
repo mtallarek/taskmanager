@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Status;
-use Illuminate\Support\Facades\Hash;
+use App\Models\Project;
 use Laravel\Sanctum\PersonalAccessToken;
 use Illuminate\Database\Seeder;
 
@@ -48,6 +48,13 @@ class DatabaseSeeder extends Seeder
             'label' => 'Done',
         ]);
 
+        Project::factory()->create([
+            'title' => 'Project 1',
+        ]);
+
+        Project::factory()->create([
+            'title' => 'Project 2',
+        ]);
 
     }
 }

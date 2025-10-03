@@ -21,6 +21,8 @@ class TaskResource extends JsonResource
             'deadline' => $this->deadline,
             'status_id' => $this->status_id,
             'status' => $this->status->label,
+            'project_id' => $this->project_id,
+            'project' => $this->project->title ?? null
         ];
     }
 }

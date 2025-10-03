@@ -12,4 +12,9 @@ class Task extends Model
     {
         return $this->belongsTo(Status::class);
     }
+
+    public function project(): BelongsTo
+    {
+        return $this->belongsTo(Project::class);
+    }
 }
