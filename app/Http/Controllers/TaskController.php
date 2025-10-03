@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\Task;
@@ -42,7 +43,7 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreTaskRequest $request, string $id)
+    public function update(UpdateTaskRequest $request, string $id)
     {
         $data = $request->validated();
 
