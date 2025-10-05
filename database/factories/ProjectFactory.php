@@ -18,7 +18,7 @@ class ProjectFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => Str::random(20)
+            'title' => Str::limit(fake()->unique()->sentence(4), 128, '')
         ];
     }
 }

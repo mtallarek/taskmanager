@@ -18,7 +18,7 @@ class StatusFactory extends Factory
     public function definition(): array
     {
         return [
-            'label' => Str::random(10),
+            'label' => Str::limit(fake()->unique()->sentence(2), 32, '')
         ];
     }
 }
