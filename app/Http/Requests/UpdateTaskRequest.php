@@ -27,6 +27,7 @@ class UpdateTaskRequest extends FormRequest
             'deadline' => ['date', 'after_or_equal:today', 'nullable'],
             'status_id'  => ['required', 'integer', 'exists:statuses,id'],
             'project_id'  => ['nullable', 'integer', 'exists:projects,id'],
+            'user_id'  => ['nullable', 'integer', 'exists:users,id'],
         ];
     }
 }

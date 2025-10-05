@@ -22,7 +22,9 @@ class TaskResource extends JsonResource
             'status_id' => $this->status_id,
             'status' => $this->status->label,
             'project_id' => $this->project_id,
-            'project' => $this->project->title ?? null
+            'project' => $this->project->title ?? null,
+            'user_id' => $this->user_id,
+            'user' => $this->user->name ?? null
         ];
     }
 }
