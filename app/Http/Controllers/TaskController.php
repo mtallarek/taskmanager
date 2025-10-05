@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use App\Models\User;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use Illuminate\Support\Carbon;
@@ -43,14 +45,14 @@ class TaskController extends Controller
         return $tasks->get()->toResourceCollection();
     }
 
-    public function indexByUser($userId)
+    public function indexByUser(User $user)
     {
-        return Task::where(['user_id' => $userId])->get()->toResourceCollection();
+        return Task::where(['user_id' => $user->id])->get()->toResourceCollection();
     }
 
-    public function indexByProject($projectId)
+    public function indexByProject(Project $project)
     {
-        return Task::where(['project_id' => $projectId])->get()->toResourceCollection();
+        return Task::where(['project_id' => $project->id])->get()->toResourceCollection();
     }
 
     /**
@@ -68,20 +70,19 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Task $task)
     {
-        return Task::findOrFail($id)->toResource();
+
+        return $task->toResource();
     }
 
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTaskRequest $request, string $id)
+    public function update(UpdateTaskRequest $request, Task $task)
     {
         $data = $request->validated();
-
-        $task = Task::findOrFail($id);
 
         $task->update($data);
 
@@ -91,12 +92,12 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Task $task)
     {
-        $task = Task::findOrFail($id);
+        $taskId = $task->id;
         $task->delete();
 
-        return response()->json('Task ' . $id . ' successfully deleted');
+        return response()->json('Task ' . $taskId . ' successfully deleted');
 
     }
 }
