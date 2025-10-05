@@ -51,13 +51,13 @@ class TaskController extends Controller
 
     public function indexByUser(User $user)
     {
-        return Task::where(['user_id' => $user->id])->get()->toResourceCollection();
+        return $user->tasks->toResourceCollection();
     }
 
     public function indexByProject(Project $project)
     {
         //Only allow own tasks
-        return Task::where(['project_id' => $project->id, 'user_id' => auth()->user()->id])->get()->toResourceCollection();
+        return $project->tasks()->where(['user_id' => auth()->user()->id])->get()->toResourceCollection();
     }
 
     /**
