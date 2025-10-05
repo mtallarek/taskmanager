@@ -9,6 +9,7 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Models\Task;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller
 {
@@ -28,7 +29,6 @@ class TaskController extends Controller
         $tasks = Task::query();
 
         if($params) {
-
             if($params['overdue'] ?? false == true ) {
                 $tasks = $tasks->where('deadline','<', Carbon::today());
             }
@@ -42,6 +42,10 @@ class TaskController extends Controller
             }
         }
 
+        //Only allow own tasks
+        //Yeah, this does not make much sense right now
+        $tasks = $tasks->where('user_id', auth()->user()->id);
+
         return $tasks->get()->toResourceCollection();
     }
 
@@ -52,7 +56,8 @@ class TaskController extends Controller
 
     public function indexByProject(Project $project)
     {
-        return Task::where(['project_id' => $project->id])->get()->toResourceCollection();
+        //Only allow own tasks
+        return Task::where(['project_id' => $project->id, 'user_id' => auth()->user()->id])->get()->toResourceCollection();
     }
 
     /**
@@ -72,7 +77,6 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-
         return $task->toResource();
     }
 

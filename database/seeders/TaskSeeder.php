@@ -13,6 +13,13 @@ class TaskSeeder extends Seeder
      */
     public function run(): void
     {
+
+        Task::factory()->create([
+            'title' => 'Root task',
+            'deadline' => '2026-01-01',
+            'user_id' => 1
+        ]);
+
         Task::factory()->create([
             'title' => 'overdue 1',
             'deadline' => '2020-01-01'
