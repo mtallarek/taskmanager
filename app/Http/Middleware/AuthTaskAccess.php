@@ -24,7 +24,7 @@ class AuthTaskAccess
            Gate::authorize('view', $task);
         }
         if($user) {
-            if($user->id != auth()->user()->id) {
+            if($user->id != auth()->user()->id && !auth()->user()->isAdmin()) {
                 abort(Response::HTTP_FORBIDDEN, 'This action is unauthorized.');
             }
         }

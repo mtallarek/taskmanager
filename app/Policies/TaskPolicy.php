@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Carbon;
 
 class TaskPolicy
 {
@@ -21,7 +22,7 @@ class TaskPolicy
      */
     public function view(User $user, Task $task): bool
     {
-        return $user->id == $task->user_id;
+        return $user->id == $task->user_id || $user->isAdmin();
     }
 
     /**
@@ -37,7 +38,14 @@ class TaskPolicy
      */
     public function update(User $user, Task $task): bool
     {
-        return $this->view($user, $task);
+        $canUpdate =  $this->view($user, $task);
+
+        if($task->deadline < Carbon::today() && !$user->isAdmin()) {
+            $canUpdate = false;
+        }
+
+        return $canUpdate;
+
     }
 
     /**

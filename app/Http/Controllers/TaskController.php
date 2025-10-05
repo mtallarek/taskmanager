@@ -42,9 +42,10 @@ class TaskController extends Controller
             }
         }
 
-        //Only allow own tasks
-        //Yeah, this does not make much sense right now
-        $tasks = $tasks->where('user_id', auth()->user()->id);
+        //Only allow own tasks for non admin users
+        if(!auth()->user()->isAdmin()) {
+            $tasks->where('user_id', auth()->user()->id);
+        }
 
         return $tasks->get()->toResourceCollection();
     }
@@ -56,8 +57,12 @@ class TaskController extends Controller
 
     public function indexByProject(Project $project)
     {
-        //Only allow own tasks
-        return $project->tasks()->where(['user_id' => auth()->user()->id])->get()->toResourceCollection();
+        //Only allow own tasks for mon admin users
+        $tasks = $project->tasks();
+        if(!auth()->user()->isAdmin()) {
+            $tasks->where(['user_id' => auth()->user()->id]);
+        }
+        return $tasks->get()->toResourceCollection();
     }
 
     /**

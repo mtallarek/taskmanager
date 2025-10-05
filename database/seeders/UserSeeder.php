@@ -28,11 +28,20 @@ class UserSeeder extends Seeder
             'abilities'      => ['*'],
         ]);
 
-        User::factory()->create([
+        $user1 = User::factory()->create([
             'name' => 'user 1',
             'email' => 'user1@example.com',
             'user_role_id' => 2,
         ]);
+
+        PersonalAccessToken::create([
+            'tokenable_type' => User::class,
+            'tokenable_id'   => $user1->id,
+            'name'           => 'Root token',
+            'token'          => hash('sha256', 'meIsUser'),
+            'abilities'      => ['*'],
+        ]);
+
         User::factory()->create([
             'name' => 'user 2',
             'email' => 'user2@example.com',

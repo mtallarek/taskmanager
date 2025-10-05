@@ -31,6 +31,12 @@ class TaskSeeder extends Seeder
         ]);
 
         Task::factory()->create([
+            'title' => 'overdue 3',
+            'deadline' => '1970-01-01',
+            'user_id' => 2
+        ]);
+
+        Task::factory()->create([
             'title' => 'due date today',
             'deadline' => date('Y-m-d')
         ]);

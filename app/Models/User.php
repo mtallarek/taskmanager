@@ -47,6 +47,11 @@ class User extends Authenticatable
         return $this->belongsTo(UserRole::class);
     }
 
+    public function isAdmin(): bool
+    {
+        return $this->userRole->name == 'admin';
+    }
+
     /**
      * Get the attributes that should be cast.
      *

@@ -14,8 +14,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::middleware(AuthTaskAccess::class)->group(function () {
         Route::get('tasks/{task}', [TaskController::class, 'show']);
-        Route::patch('tasks/{task}', [TaskController::class, 'update']);
-        Route::delete('tasks/{task}', [TaskController::class, 'destroy']);
+        Route::patch('tasks/{task}', [TaskController::class, 'update'])->can('update', 'task');
+        Route::delete('tasks/{task}', [TaskController::class, 'destroy'])->can('delete', 'task');
         Route::get('tasks/user/{user}', [TaskController::class, 'indexByUser']);
         Route::get('tasks/project/{project}', [TaskController::class, 'indexByProject']);
     });
