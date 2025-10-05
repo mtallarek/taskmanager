@@ -4,20 +4,54 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\Task;
+use Illuminate\Support\Carbon;
 
 class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Task::all()->toResourceCollection();
+
+        $params = $request->validate([
+            'overdue' => 'boolean',
+            'user_id' => 'integer|exists:users,id',
+            'project_id' => 'integer|exists:projects,id',
+        ]);
+
+
+        $tasks = Task::query();
+
+        if($params) {
+
+            if($params['overdue'] ?? false == true ) {
+                $tasks = $tasks->where('deadline','<', Carbon::today());
+            }
+
+            if($params['user_id'] ?? false) {
+                $tasks->where('user_id', $params['user_id']);
+            }
+
+            if($params['project_id'] ?? false) {
+                $tasks->where('project_id', $params['project_id']);
+            }
+        }
+
+        return $tasks->get()->toResourceCollection();
     }
 
+    public function indexByUser($userId)
+    {
+        return Task::where(['user_id' => $userId])->get()->toResourceCollection();
+    }
+
+    public function indexByProject($projectId)
+    {
+        return Task::where(['project_id' => $projectId])->get()->toResourceCollection();
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -62,7 +96,7 @@ class TaskController extends Controller
         $task = Task::findOrFail($id);
         $task->delete();
 
-        return response()->json('Task '.$id.' successfully deleted');
+        return response()->json('Task ' . $id . ' successfully deleted');
 
     }
 }

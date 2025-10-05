@@ -10,4 +10,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::apiResource('tasks', TaskController::class)->except(['update']);
     Route::patch('tasks/{task}', [TaskController::class, 'update']);
+
+    Route::get('tasks/user/{user}', [TaskController::class, 'indexByUser']);
+    Route::get('tasks/project/{project}', [TaskController::class, 'indexByProject']);
+
 });
