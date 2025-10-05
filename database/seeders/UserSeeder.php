@@ -17,6 +17,7 @@ class UserSeeder extends Seeder
         $rootUser = User::factory()->create([
             'name' => 'root',
             'email' => 'root@example.com',
+            'user_role_id' => 1,
         ]);
 
         PersonalAccessToken::create([
@@ -30,6 +31,7 @@ class UserSeeder extends Seeder
         User::factory()->create([
             'name' => 'user 1',
             'email' => 'user1@example.com',
+            'user_role_id' => 2,
         ]);
         User::factory()->create([
             'name' => 'user 2',
