@@ -32,4 +32,4 @@ Für die Index Abfragen wird lediglich gefiltert. Ausser für die Abfrage nach U
 hat oder nicht.\
 Das führt zu diesem Zeitpunkt zu einer Situation wo man zwar die Liste der Tasks nach User filtern kann, aber diese
 Liste wird wiederum auf die eigene User id gefiltert. Das macht alles Sinn wenn es eine Admin Rolle o.Ä gibt die gesamt
-Zugriff hat.
+Zugriff hat (was ja später implementiert wurde).
