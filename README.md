@@ -4,7 +4,7 @@ A Basic application for managing tasks via API
 
 ## Installation
 
-**Edit .env and change the following lines to match your database:**\
+**copy .env.example to .env and change the following lines to match your database:**\
 DB_CONNECTION=mysql\
 DB_HOST=127.0.0.1\
 DB_PORT=3306\
