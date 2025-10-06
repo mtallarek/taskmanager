@@ -47,12 +47,12 @@ class TaskController extends Controller
             $tasks->where('user_id', auth()->user()->id);
         }
 
-        return $tasks->get()->toResourceCollection();
+        return $tasks->paginate(10)->toResourceCollection();
     }
 
     public function indexByUser(User $user)
     {
-        return $user->tasks->toResourceCollection();
+        return $user->tasks()->paginate(10)->toResourceCollection();
     }
 
     public function indexByProject(Project $project)
@@ -62,7 +62,7 @@ class TaskController extends Controller
         if(!auth()->user()->isAdmin()) {
             $tasks->where(['user_id' => auth()->user()->id]);
         }
-        return $tasks->get()->toResourceCollection();
+        return $tasks->paginate(10)->toResourceCollection();
     }
 
     /**
